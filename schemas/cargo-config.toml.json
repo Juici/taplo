@@ -1,0 +1,90 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": ".cargo/config.toml",
+    "description": "A schema for Cargo configuration files",
+    "x-taplo-info": {
+        "patterns": ["^((.*(/|\\\\))?\\.cargo(/|\\\\)config(\\.toml)?)$"]
+    },
+    "type": "object",
+    "properties": {
+        "paths": {
+            "title": "Path dependency overrides",
+            "description": "An array of paths to local packages which are to be used as overrides for dependencies. For more information see the [Overriding Dependencies guide](https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html#paths-overrides).",
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "x-taplo": {
+                "links": {
+                    "key": "https://doc.rust-lang.org/cargo/reference/config.html#paths"
+                }
+            }
+        },
+        "alias": {
+            "title": "Command aliases",
+            "description": "The `[alias]` table defines CLI command aliases. For example, running `cargo b` is an alias for running `cargo build`. Each key in the table is the subcommand, and the value is the actual command to run. The value may be an array of strings, where the first element is the command and the following are arguments. It may also be a string, which will be split on spaces into subcommand and arguments. The following aliases are built-in to Cargo:\n\n```toml\n[alias]\nb = \"build\"\nc = \"check\"\nd = \"doc\"\nt = \"test\"\nr = \"run\"\n```\nAliases are not allowed to redefine existing built-in commands.",
+            "type": "object",
+            "additionalProperties": {
+                "type": ["string", "array"],
+                "items": {
+                    "type": "string"
+                }
+            },
+            "x-taplo": {
+                "links": {
+                    "key": "https://doc.rust-lang.org/cargo/reference/config.html#alias"
+                }
+            }
+        },
+        "build": {
+            "title": "Compiler settings",
+            "description": "The `[build]` table controls build-time operations and compiler settings.",
+            "type": "object",
+            "properties": {
+                "jobs": {
+                    "title": "Number of parallel jobs",
+                    "description": "Sets the maximum number of compiler processes to run in parallel.\n\nCan be overridden with the `--jobs` CLI option.",
+                    "type": "integer"
+                },
+                "rustc": {
+                    "title": "Compiler tool",
+                    "description": "Sets the executable to use for `rustc`.",
+                    "type": "string",
+                    "default": "rustc"
+                },
+                "rustc-wrapper": {
+                    "title": "Compiler wrapper",
+                    "description": "Sets a wrapper to execute instead of `rustc`. The first argument passed to the wrapper is the path to the actual `rustc`.",
+                    "type": "string"
+                },
+                "rustc-workspace-wrapper": {
+                    "title": "Compiler workspace wrapper",
+                    "description": "Sets a wrapper to execute instead of `rustc`, for workspace members only. The first argument passed to the wrapper is the path to the actual `rustc`. It affects the filename hash so that artifacts produced by the wrapper are cached separately.",
+                    "type": "string"
+                },
+                "rustdoc": {
+                    "title": "Doc generator",
+                    "description": "Sets the executable to use for `rustdoc`.",
+                    "type": "string",
+                    "default": "rustdoc"
+                },
+                "target": {
+                    "title": "Target platform",
+                    "description": "The default target platform triple to compile to.\n\nThis may also be a relative path to a `.json` target spec file.\n\nCan be overridden with the `--target` CLI option.",
+                    "type": "string"
+                },
+                "target-dir": {
+                    "title": "Generated artifact path",
+                    "description": "The path to where all compiler output is placed. The default if not specified is a directory named `target` located at the root of the workspace.\n\nCan be overridden with the `--target-dir` CLI option.",
+                    "type": "string",
+                    "default": "target"
+                }
+            },
+            "x-taplo": {
+                "links": {
+                    "key": "https://doc.rust-lang.org/cargo/reference/config.html#build"
+                }
+            }
+        }
+    }
+}
