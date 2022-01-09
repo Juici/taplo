@@ -283,6 +283,23 @@
                     "key": "https://doc.rust-lang.org/cargo/reference/config.html#http"
                 }
             }
+        },
+        "install": {
+            "title": "`cargo install` defaults",
+            "description": "The `[install]` table defines defaults for the [`cargo install`](https://doc.rust-lang.org/cargo/commands/cargo-install.html) command.",
+            "type": "object",
+            "properties": {
+                "root": {
+                    "title": "Install directory",
+                    "description": "Sets the path to the root directory for installing executables for [`cargo install`](https://doc.rust-lang.org/cargo/commands/cargo-install.html). Executables go into a `bin` directory underneath the root.\n\nTo track information of installed executables, some extra files, such as `.crates.toml` and `.crates2.json`, are also created under this root.\n\nThe default if not specified is Cargo's home directory (default `.cargo` in your home directory).\n\nCan be overridden with the `--root` command-line option.",
+                    "type": "string"
+                }
+            },
+            "x-taplo": {
+                "links": {
+                    "key": "https://doc.rust-lang.org/cargo/reference/config.html#install"
+                }
+            }
         }
     },
     "definitions": {
