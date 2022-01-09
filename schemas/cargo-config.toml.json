@@ -300,6 +300,36 @@
                     "key": "https://doc.rust-lang.org/cargo/reference/config.html#install"
                 }
             }
+        },
+        "net": {
+            "title": "Network configuration",
+            "description": "The `[net]` table controls networking configuration.",
+            "type": "object",
+            "properties": {
+                "retry": {
+                    "title": "Network retries",
+                    "description": "Number of times to retry possibly spurious network errors.",
+                    "type": "integer",
+                    "default": 2
+                },
+                "git-fetch-with-cli": {
+                    "title": "Use git executable",
+                    "description": "If this is `true`, then Cargo will use the `git` executable to fetch registry indexes and git dependencies. If `false`, then it uses a built-in `git` library.\n\nSetting this to `true` can be helpful if you have special authentication requirements that Cargo does not support. See [Git Authentication](https://doc.rust-lang.org/cargo/appendix/git-authentication.html) for more information about setting up git authentication.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "offline": {
+                    "title": "Do not access network",
+                    "description": "If this is `true`, then Cargo will avoid accessing the network, and attempt to proceed with locally cached data. If `false`, Cargo will access the network as needed, and generate an error if it encounters a network error.\n\nCan be overridden with the `--offline` command-line option.",
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "x-taplo": {
+                "links": {
+                    "key": "https://doc.rust-lang.org/cargo/reference/config.html#net"
+                }
+            }
         }
     },
     "definitions": {
