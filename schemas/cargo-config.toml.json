@@ -186,6 +186,25 @@
                 }
             }
         },
+        "future-incompat-report": {
+            "title": "Incompatibility reporting",
+            "description": "The `[future-incompat-report]` table controls setting for [future incompat reporting](https://doc.rust-lang.org/cargo/reference/future-incompat-report.html)",
+            "type": "object",
+            "properties": {
+                "frequency": {
+                    "title": "Report frequency",
+                    "description": "Controls how often we display a notification to the terminal when a future incompat report is available. Possible values:\n\n* `always` (default): Always display a notification when a command (e.g. `cargo build`) produces a future incompat report\n* `never`: Never display a notification",
+                    "type": "string",
+                    "enum": ["always", "never"],
+                    "default": "always"
+                }
+            },
+            "x-taplo": {
+                "links": {
+                    "key": "https://doc.rust-lang.org/cargo/reference/config.html#future-incompat-report"
+                }
+            }
+        },
         "http": {
             "title": "HTTP behaviour",
             "description": "The `[http]` table defines settings for HTTP behavior. This includes fetching crate dependencies and accessing remote git repositories.",
