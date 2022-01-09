@@ -25,10 +25,18 @@
             "description": "The `[alias]` table defines CLI command aliases. For example, running `cargo b` is an alias for running `cargo build`. Each key in the table is the subcommand, and the value is the actual command to run. The value may be an array of strings, where the first element is the command and the following are arguments. It may also be a string, which will be split on spaces into subcommand and arguments. The following aliases are built-in to Cargo:\n\n```toml\n[alias]\nb = \"build\"\nc = \"check\"\nd = \"doc\"\nt = \"test\"\nr = \"run\"\n```\nAliases are not allowed to redefine existing built-in commands.",
             "type": "object",
             "additionalProperties": {
-                "type": ["string", "array"],
-                "items": {
-                    "type": "string"
-                }
+                "description": "Command alias",
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                ]
             },
             "x-taplo": {
                 "links": {
@@ -82,18 +90,32 @@
                 "rustflags": {
                     "title": "Compiler flags",
                     "description": "Extra command-line flags to pass to `rustc`. The value may be a array of strings or a space-separated string.\n\nThere are three mutually exclusive sources of extra flags. They are checked in order, with the first one being used:\n\n1. `RUSTFLAGS` environment variable.\n2. All matching `target.<triple>.rustflags` and `target.<cfg>.rustflags` config entries joined together.\n3. `build.rustflags` config value.\n\nAdditional flags may also be passed with the [`cargo rustc`](https://doc.rust-lang.org/cargo/commands/cargo-rustc.html) command.\n\nIf the `--target` flag (or [`build.target`](https://doc.rust-lang.org/cargo/reference/config.html#buildtarget)) is used, then the flags will only be passed to the compiler for the target. Things being built for the host, such as build scripts or proc macros, will not receive the args. Without `--target`, the flags will be passed to all compiler invocations (including build scripts and proc macros) because dependencies are shared. If you have args that you do not want to pass to build scripts or proc macros and are building for the host, pass `--target` with the host triple.\n\nIt is not recommended to pass in flags that Cargo itself usually manages. For example, the flags driven by [profiles] are best handled by setting the appropriate profile setting.\n\n> **Caution**: Due to the low-level nature of passing flags directly to the compiler, this may cause a conflict with future versions of Cargo which may issue the same or similar flags on its own which may interfere with the flags you specify. This is an area where Cargo may not always be backwards compatible.",
-                    "type": ["string", "array"],
-                    "items": {
-                        "type": "string"
-                    }
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
                 },
                 "rustdocflags": {
                     "title": "Rustdoc flags",
                     "description": "Extra command-line flags to pass to `rustdoc`. The value may be a array of strings or a space-separated string.\n\nThere are two mutually exclusive sources of extra flags. They are checked in order, with the first one being used:\n\n1. `RUSTDOCFLAGS` environment variable.\n2. `build.rustdocflags` config value.\n\nAdditional flags may also be passed with the [`cargo rustdoc`](https://doc.rust-lang.org/cargo/commands/cargo-rustdoc.html) command.",
-                    "type": ["string", "array"],
-                    "items": {
-                        "type": "string"
-                    }
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
                 },
                 "incremental": {
                     "title": "Incremental compilation",
