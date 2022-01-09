@@ -306,11 +306,11 @@
                             "type": "object",
                             "properties": {
                                 "min": {
-                                    "description": "Minimum TLS version",
+                                    "description": "Minimum TLS version.",
                                     "$ref": "#/definitions/tls-version"
                                 },
                                 "max": {
-                                    "description": "Maximum TLS version",
+                                    "description": "Maximum TLS version.",
                                     "$ref": "#/definitions/tls-version"
                                 }
                             }
