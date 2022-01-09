@@ -240,25 +240,28 @@
                 "ssl-version": {
                     "title": "TLS version",
                     "description": "This sets the minimum TLS version to use. It takes a string, with one of the possible values of \"default\", \"tlsv1\", \"tlsv1.0\", \"tlsv1.1\", \"tlsv1.2\", or \"tlsv1.3\".\n\nThis may alternatively take a table with two keys, `min` and `max`, which each take a string value of the same kind that specifies the minimum and maximum range of TLS versions to use.\n\nThe default is a minimum version of \"tlsv1.0\" and a max of the newest version supported on your platform, typically \"tlsv1.3\".",
-                    "type": ["string", "object"],
-                    "enum": [
-                        "default",
-                        "tlsv1",
-                        "tlsv1.0",
-                        "tlsv1.1",
-                        "tlsv1.2",
-                        "tlsv1.3"
-                    ],
-                    "properties": {
-                        "min": {
-                            "description": "Minimum TLS version",
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "const": "default"
+                        },
+                        {
                             "$ref": "#/definitions/tls-version"
                         },
-                        "max": {
-                            "description": "Maximum TLS version",
-                            "$ref": "#/definitions/tls-version"
+                        {
+                            "type": "object",
+                            "properties": {
+                                "min": {
+                                    "description": "Minimum TLS version",
+                                    "$ref": "#/definitions/tls-version"
+                                },
+                                "max": {
+                                    "description": "Maximum TLS version",
+                                    "$ref": "#/definitions/tls-version"
+                                }
+                            }
                         }
-                    }
+                    ]
                 },
                 "low-speed-limit": {
                     "title": "Low speed limit",
