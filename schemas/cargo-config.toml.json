@@ -78,6 +78,41 @@
                     "description": "The path to where all compiler output is placed. The default if not specified is a directory named `target` located at the root of the workspace.\n\nCan be overridden with the `--target-dir` CLI option.",
                     "type": "string",
                     "default": "target"
+                },
+                "rustflags": {
+                    "title": "Compiler flags",
+                    "description": "Extra command-line flags to pass to `rustc`. The value may be a array of strings or a space-separated string.\n\nThere are three mutually exclusive sources of extra flags. They are checked in order, with the first one being used:\n\n1. `RUSTFLAGS` environment variable.\n2. All matching `target.<triple>.rustflags` and `target.<cfg>.rustflags` config entries joined together.\n3. `build.rustflags` config value.\n\nAdditional flags may also be passed with the [`cargo rustc`](https://doc.rust-lang.org/cargo/commands/cargo-rustc.html) command.\n\nIf the `--target` flag (or [`build.target`](https://doc.rust-lang.org/cargo/reference/config.html#buildtarget)) is used, then the flags will only be passed to the compiler for the target. Things being built for the host, such as build scripts or proc macros, will not receive the args. Without `--target`, the flags will be passed to all compiler invocations (including build scripts and proc macros) because dependencies are shared. If you have args that you do not want to pass to build scripts or proc macros and are building for the host, pass `--target` with the host triple.\n\nIt is not recommended to pass in flags that Cargo itself usually manages. For example, the flags driven by [profiles] are best handled by setting the appropriate profile setting.\n\n> **Caution**: Due to the low-level nature of passing flags directly to the compiler, this may cause a conflict with future versions of Cargo which may issue the same or similar flags on its own which may interfere with the flags you specify. This is an area where Cargo may not always be backwards compatible.",
+                    "type": ["string", "array"],
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "rustdocflags": {
+                    "title": "Rustdoc flags",
+                    "description": "Extra command-line flags to pass to `rustdoc`. The value may be a array of strings or a space-separated string.\n\nThere are two mutually exclusive sources of extra flags. They are checked in order, with the first one being used:\n\n1. `RUSTDOCFLAGS` environment variable.\n2. `build.rustdocflags` config value.\n\nAdditional flags may also be passed with the [`cargo rustdoc`](https://doc.rust-lang.org/cargo/commands/cargo-rustdoc.html) command.",
+                    "type": ["string", "array"],
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "incremental": {
+                    "title": "Incremental compilation",
+                    "description": "Whether or not to perform [incremental compilation](https://doc.rust-lang.org/cargo/reference/profiles.html#incremental). The default if not set is to use the value from the [profile](https://doc.rust-lang.org/cargo/reference/profiles.html). Otherwise this overrides the setting of all profiles.\n\nThe `CARGO_INCREMENTAL` environment variable can be set to `1` to force enable incremental compilation for all profiles, or `0` to disable it. This env var overrides the config setting.",
+                    "type": "boolean"
+                },
+                "dep-info-basedir": {
+                    "description": "Strips the given path prefix from [dep info](https://doc.rust-lang.org/cargo/guide/build-cache.html#dep-info-files) file paths. This config setting is intended to convert absolute paths to relative paths for tools that require relative paths.\n\nThe setting itself is a config-relative path. So, for example, a value of `\".\"` would strip all paths starting with the parent directory of the `.cargo` directory.",
+                    "type": "string"
+                },
+                "pipelining": {
+                    "title": "Build pipelining",
+                    "description": "This option is deprecated and unused. Cargo always has pipelining enabled.",
+                    "type": "boolean",
+                    "default": true,
+                    "deprecated": true,
+                    "x-taplo": {
+                        "hidden": true
+                    }
                 }
             },
             "x-taplo": {
