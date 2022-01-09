@@ -105,7 +105,6 @@
                     "type": "string"
                 },
                 "pipelining": {
-                    "title": "Build pipelining",
                     "description": "This option is deprecated and unused. Cargo always has pipelining enabled.",
                     "type": "boolean",
                     "default": true,
@@ -138,6 +137,39 @@
             "x-taplo": {
                 "links": {
                     "key": "https://doc.rust-lang.org/cargo/reference/config.html#doc"
+                }
+            }
+        },
+        "cargo-new": {
+            "title": "`cargo new` defaults",
+            "description": "The `[cargo-new]` table defines defaults for the [`cargo new`](https://doc.rust-lang.org/cargo/commands/cargo-new.html) command.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "This option is deprecated and unused.",
+                    "type": "string",
+                    "deprecated": true,
+                    "x-taplo": {
+                        "hidden": true
+                    }
+                },
+                "email": {
+                    "description": "This option is deprecated and unused.",
+                    "type": "string",
+                    "deprecated": true,
+                    "x-taplo": {
+                        "hidden": true
+                    }
+                },
+                "vcs": {
+                    "title": "Version control system",
+                    "description": "Specifies the source control system to use for initializing a new repository. Valid values are `git`, `hg` (for Mercurial), `pijul`, `fossil` or `none` to disable this behavior. Defaults to `git`, or `none` if already inside a VCS repository. Can be overridden with the `--vcs` CLI option.",
+                    "type": "string"
+                }
+            },
+            "x-taplo": {
+                "links": {
+                    "key": "https://doc.rust-lang.org/cargo/reference/config.html#cargo-new"
                 }
             }
         }
