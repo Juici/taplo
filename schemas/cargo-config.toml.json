@@ -120,6 +120,26 @@
                     "key": "https://doc.rust-lang.org/cargo/reference/config.html#build"
                 }
             }
+        },
+        "doc": {
+            "title": "`cargo doc` options",
+            "description": "The `[doc]` table defines options for the [`cargo doc`](https://doc.rust-lang.org/cargo/commands/cargo-doc.html) command.",
+            "type": "object",
+            "properties": {
+                "browser": {
+                    "title": "Browser",
+                    "description": "This option sets the browser to be used by [`cargo doc`](https://doc.rust-lang.org/cargo/commands/cargo-doc.html), overriding the `BROWSER` environment variable when opening documentation with the `--open` option.",
+                    "type": ["string", "array"],
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "x-taplo": {
+                "links": {
+                    "key": "https://doc.rust-lang.org/cargo/reference/config.html#doc"
+                }
+            }
         }
     }
 }
