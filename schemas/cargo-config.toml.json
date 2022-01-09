@@ -185,6 +185,91 @@
                     "key": "https://doc.rust-lang.org/cargo/reference/config.html#env"
                 }
             }
+        },
+        "http": {
+            "title": "HTTP behaviour",
+            "description": "The `[http]` table defines settings for HTTP behavior. This includes fetching crate dependencies and accessing remote git repositories.",
+            "type": "object",
+            "properties": {
+                "debug": {
+                    "title": "HTTP debugging",
+                    "description": "If `true`, enables debugging of HTTP requests. The debug information can be seen by setting the `CARGO_LOG=cargo::ops::registry=debug` environment variable (or use `trace` for even more information).\n\nBe wary when posting logs from this output in a public location. The output may include headers with authentication tokens which you don't want to leak! Be sure to review logs before posting them.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "proxy": {
+                    "title": "HTTP proxy",
+                    "description": "Sets an HTTP and HTTPS proxy to use. The format is in [libcurl format](https://ec.haxx.se/usingcurl-proxies.html) as in `[protocol://]host[:port]`. If not set, Cargo will also check the `http.proxy` setting in your global git configuration. If none of those are set, the `HTTPS_PROXY` or `https_proxy` environment variables set the proxy for HTTPS requests, and `http_proxy` sets it for HTTP requests.",
+                    "type": "string"
+                },
+                "timeout": {
+                    "title": "Request timeout",
+                    "description": "Sets the timeout for each HTTP request, in seconds.",
+                    "type": "integer",
+                    "default": 30
+                },
+                "cainfo": {
+                    "title": "Certificate Authority",
+                    "description": "Path to a Certificate Authority (CA) bundle file, used to verify TLS certificates. If not specified, Cargo attempts to use the system certificates.",
+                    "type": "string"
+                },
+                "check-revoke": {
+                    "title": "Check certificate revocaction",
+                    "description": "This determines whether or not TLS certificate revocation checks should be performed. This only works on Windows.",
+                    "type": "boolean"
+                },
+                "ssl-version": {
+                    "title": "TLS version",
+                    "description": "This sets the minimum TLS version to use. It takes a string, with one of the possible values of \"default\", \"tlsv1\", \"tlsv1.0\", \"tlsv1.1\", \"tlsv1.2\", or \"tlsv1.3\".\n\nThis may alternatively take a table with two keys, `min` and `max`, which each take a string value of the same kind that specifies the minimum and maximum range of TLS versions to use.\n\nThe default is a minimum version of \"tlsv1.0\" and a max of the newest version supported on your platform, typically \"tlsv1.3\".",
+                    "type": ["string", "object"],
+                    "enum": [
+                        "default",
+                        "tlsv1",
+                        "tlsv1.0",
+                        "tlsv1.1",
+                        "tlsv1.2",
+                        "tlsv1.3"
+                    ],
+                    "properties": {
+                        "min": {
+                            "description": "Minimum TLS version",
+                            "$ref": "#/definitions/tls-version"
+                        },
+                        "max": {
+                            "description": "Maximum TLS version",
+                            "$ref": "#/definitions/tls-version"
+                        }
+                    }
+                },
+                "low-speed-limit": {
+                    "title": "Low speed limit",
+                    "description": "This setting controls timeout behavior for slow connections. If the average transfer speed in bytes per second is below the given value for [`http.timeout`](https://doc.rust-lang.org/cargo/reference/config.html#httptimeout) seconds (default 30 seconds), then the connection is considered too slow and Cargo will abort and retry.",
+                    "type": "integer",
+                    "default": 10
+                },
+                "multiplexing": {
+                    "title": "HTTP2 multiplexing",
+                    "description": "When `true`, Cargo will attempt to use the HTTP2 protocol with multiplexing. This allows multiple requests to use the same connection, usually improving performance when fetching multiple files. If `false`, Cargo will use HTTP 1.1 without pipelining.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "user-agent": {
+                    "title": "User agent",
+                    "description": "Specifies a custom user-agent header to use. The default if not specified is a string that includes Cargo's version.",
+                    "type": "string"
+                }
+            },
+            "x-taplo": {
+                "links": {
+                    "key": "https://doc.rust-lang.org/cargo/reference/config.html#http"
+                }
+            }
+        }
+    },
+    "definitions": {
+        "tls-version": {
+            "type": "string",
+            "enum": ["tlsv1", "tlsv1.0", "tlsv1.1", "tlsv1.2", "tlsv1.3"]
         }
     }
 }
