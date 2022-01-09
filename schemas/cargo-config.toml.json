@@ -128,10 +128,17 @@
                 "browser": {
                     "title": "Browser",
                     "description": "This option sets the browser to be used by [`cargo doc`](https://doc.rust-lang.org/cargo/commands/cargo-doc.html), overriding the `BROWSER` environment variable when opening documentation with the `--open` option.",
-                    "type": ["string", "array"],
-                    "items": {
-                        "type": "string"
-                    }
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
                 }
             },
             "x-taplo": {
